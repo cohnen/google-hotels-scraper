@@ -8,7 +8,7 @@ import { LoadedRequest, Request } from 'crawlee';
  */
 export const skipGoogleConsent = async (request: LoadedRequest<Request>, page: Page) => {
     // If the loaded URL is the Google consent dialog, reject all cookies
-    if (request.loadedUrl.startsWith('https://consent.google.com')) {
+    if (request.loadedUrl.startsWith('https://consent.google')) {
         await page.click('button[aria-label="Reject all"]');
     }
 };

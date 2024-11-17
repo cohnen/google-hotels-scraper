@@ -27,7 +27,7 @@ export const getDetailsUrls = async <Context extends PlaywrightCrawlingContext>(
         const items = await page.$$('main > c-wiz > span > c-wiz > c-wiz > div > a');
         log.info(`Found ${items.length} items on the page ${pageNumber}`);
         const urls = await Promise.all(items.map(async (item) => (
-            `https://www.google.com${await item.getAttribute('href')}`
+            `https://www.google.co.in${await item.getAttribute('href')}`
         ))) as string[];
 
         if (options.maxResults === undefined) {
