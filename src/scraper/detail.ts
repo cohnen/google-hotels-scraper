@@ -21,7 +21,7 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
     const { page, log } = ctx;
 
     const title = await page.locator('h1[role="heading"]').last().innerText();
-    const googleId = await page.locator('span[data-place-id]').first().getAttribute('data-place-id');
+    const googleId = await page.locator('span[data-place-id]').first().getAttribute('data-place-id') || undefined;
     const url = page.url();
 
     const [pricesTab, reviewsTab, aboutTab, photosTab] = await Promise.all([
