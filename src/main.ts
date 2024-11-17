@@ -35,7 +35,7 @@ const crawler = new PlaywrightCrawler({
 });
 
 try {
-    await crawler.run([`https://www.google.com/travel/search?q=${encodeURIComponent(searchQuery)}&hl=${CONTENT_LANGUAGE_CODE}`]);
+    await crawler.run([`https://www.google.co.in/travel/search?q=${encodeURIComponent(searchQuery)}&hl=${CONTENT_LANGUAGE_CODE}`]);
 } catch (error) {
     await Actor.exit({ exitCode: 1 });
 }

@@ -9,6 +9,7 @@
                 "fields": [
                     "thumbnail",
                     "title",
+                    "googleId",
                     "address",
                     "rating",
                     "reviews",
@@ -25,6 +26,10 @@
                     },
                     "title": {
                         "label": "Hotel name",
+                        "format": "text"
+                    },
+                    "googleId": {
+                        "label": "Google Place ID",
                         "format": "text"
                     },
                     "address": {

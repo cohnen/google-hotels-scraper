@@ -2,6 +2,7 @@ import { LoadedRequest, PlaywrightCrawlingContext, Request } from 'crawlee';
 
 export interface GoogleHotelItemData {
     url: string;
+    googleId: string;
     title: string;
     website?: string;
     address?: string;
@@ -20,6 +21,7 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
     const { page, log } = ctx;
 
     const title = await page.locator('h1[role="heading"]').last().innerText();
+    const googleId = await page.locator('span[data-place-id]').first().getAttribute('data-place-id');
     const url = page.url();
 
     const [pricesTab, reviewsTab, aboutTab, photosTab] = await Promise.all([
@@ -43,7 +45,7 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
                 const textPrice = await row.locator('div:nth-of-type(2) > span > span > span > span').first().innerText();
                 const price = parseFloat(textPrice.replace(/[^0-9.]/g, ''));
 
-                return { provider, price, link: `https://www.google.com/travel${link}` };
+                return { provider, price, link: `https://www.google.co.in/travel${link}` };
             } catch (e) {
                 // some providers has multiple prices and structure is different of the others is different,
                 // so we need to skip them and use the first (cheapest) price
@@ -99,7 +101,7 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
         return null;
     }))).filter((photo) => photo !== null) as string[];
 
-    log.info(`Parsed detail (${title})`, { url: page.url() });
+    log.info(`Parsed detail (${title}) [${googleId}]`, { url: page.url() });
 
     const thumbnail = photos.length ? photos[0] : undefined;
     let priceRange: string | undefined;
@@ -115,6 +117,7 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
         thumbnail,
         url,
         title,
+        googleId,
         website,
         address,
         phone,
