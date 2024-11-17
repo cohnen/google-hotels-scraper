@@ -2,7 +2,7 @@ import { LoadedRequest, PlaywrightCrawlingContext, Request } from 'crawlee';
 
 export interface GoogleHotelItemData {
     url: string;
-    googleId: string;
+    googleId?: string;
     title: string;
     website?: string;
     address?: string;
