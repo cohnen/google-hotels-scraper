@@ -32,8 +32,17 @@ export const getHotelItemData = async <Context extends PlaywrightCrawlingContext
     ]);
 
     await pricesTab.click();
-    const pricesBtns = await page.locator('button[aria-label^="Visit site for"]').all();
-    // const pricesBtns = await page.$$('button[aria-label^="Visit site for"]');
+
+    // Click "view more options" button if present
+    try {
+        const viewMoreButton = page.locator('span[class=bbRZy]').first();
+        await viewMoreButton.click();
+    } catch (e) {
+        log.debug('No view more button found');
+    }
+
+    // Get all price rows that are not sponsored
+    const pricesBtns = await page.locator('button[aria-label^="Visit site for"]:not(:has-text("Sponsored"))').all();
     const prices = (await Promise.all(pricesBtns.map(async (btn) => {
         const row = btn.locator('..').locator('..');
         const link = await row.locator('..').getAttribute('href');
